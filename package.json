@@ -1,0 +1,26 @@
+{
+  "name": "logger-email",
+  "version": "1.0.0",
+  "description": "express+no系统，包含邮件功能",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dai1254473705/logger-email.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "log4js",
+    "node-schedule",
+    "nodemailer"
+  ],
+  "author": "daiyunzhou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dai1254473705/logger-email/issues"
+  },
+  "homepage": "https://github.com/dai1254473705/logger-email#readme"
+}
