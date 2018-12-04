@@ -21,16 +21,70 @@
     %] end a coloured block
  */
 var path = require('path');
-module.exports = {
+var config = {
   pattern: '_yyyy-MM-dd.log',
   layout: {
     type: 'pattern',
     pattern: '%d %p %c %z %m'
   }, //定义日志输出格式
   compress: false, //是否在生成第二个文件时将上一个压缩 如：error_2018-10-30.log.gz
-  logPath: path.join(__dirname,'../../zhugelogs/'),
+  logPath: path.join(__dirname,'../../defaultlogs/'),
   keepFileExt: false,
   daysToKeep: 7,//保存7天,log4不起作用，单独方法删除文件
   alwaysIncludePattern: true,
-  onLineLink: 'http://127.0.1:3000/ask/zhugeasklogs/' //可访问的域名地址，查看日志用
+  onLineLink: 'http://127.0.1:3000/defaultlogs/' //可访问的域名地址，查看日志用
+};
+
+// check keys
+var check = function (name,options,callback){
+  if ( options[name] === null || options[name] === undefined ) {
+      var err = new Error();
+      err.name = name + ' --is required';
+      err.message = name + ' --should be set value';
+      if ( callback ) { callback(err,null); }
+      throw err;
+  }
+};
+
+var setLogConfig = function (options,callback){
+  // check options
+  console.log('========================start set log config=============================');
+  if ( !options ) {
+      var err = new Error();
+      err.name = 'not defined error';
+      err.message = 'You must set the value';
+      if ( callback ) { callback(err,null); }
+      throw err;
+  }
+
+  if ( typeof options !== 'object') {
+      var err = new Error();
+      err.name = 'type error';
+      err.message = 'setLogConfig recive object!';
+      if ( callback ) { callback(err,null); }
+      throw err;
+  }
+  // required options 
+  var arr = ['logPath'];
+  for (var key in arr) {
+      check(arr[key],options,callback);
+  }
+  var result = {};
+
+  // 仅允许 [pattern,layout,compress,logPath,daysToKeep,onLineLink] 修改
+  result.pattern = options.pattern || config.pattern; // file name 
+  result.layout = options.layout || config.layout; // log format
+  result.compress = options.compress || config.compress; // compress
+  result.logPath = options.logPath || config.logPath; // file path
+  result.daysToKeep = options.daysToKeep || config.daysToKeep; // days to keep 
+  result.onLineLink = options.onLineLink || config.onLineLink; // link 
+
+  config = Object.assign(config,result);
+  console.log(config);
+  console.log('========================set config log ok ===============================');
+};
+
+module.exports = {
+  set: setLogConfig,
+  options: config
 };

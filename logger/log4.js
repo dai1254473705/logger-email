@@ -22,9 +22,10 @@
 var log4js = require('log4js');
 var path = require('path');
 var fs = require('fs');
-var LOGCONFIG = require('../config/log-config');
+var LOGCONFIG = require('../config/log-config').options;
 
 //判断logs文件是否存在，不存在就创建
+console.log('----------------LOGCONFIG----------------------',LOGCONFIG);
 fs.existsSync(LOGCONFIG.logPath) || fs.mkdirSync(LOGCONFIG.logPath);
 
 //日志级别配置文件

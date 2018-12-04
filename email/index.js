@@ -8,7 +8,7 @@
  */
 'use strict';
 var nodemailer = require('nodemailer');
-var EMAILCONFIG = require('../config/email-config');
+var EMAILCONFIG = require('../config/email-config').options;
 
 // create reusable transporter object using the default SMTP transport
 var transporter = nodemailer.createTransport({

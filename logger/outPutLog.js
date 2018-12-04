@@ -14,7 +14,7 @@ var logger = log4.getLogger('error'); // 非接口请求error
 var logger2 = log4.getLogger('request'); //接口请求error
 var logger3 = log4.getLogger('manual'); // 手动输出内容
 var checkLogToSend = require('./checkLogToSend');// ejs 空白页，发送日志
-var LOGCONFIG = require('../config/log-config');
+var LOGCONFIG = require('../config/log-config').options;
 var linkPath = LOGCONFIG.onLineLink ;
 var moment = require('moment');
 
