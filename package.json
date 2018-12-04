@@ -1,21 +1,14 @@
 {
   "name": "logger-email",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "express+node+log4js日志系统，包含邮件功能",
   "main": "index.js",
-  "files": [
-    "index.js",
-    "config",
-    "email",
-    "logger",
-    "README.md"
-  ],
   "author": {
     "name": "daiyunzhou",
     "email": "1254473705@qq.com"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
