@@ -22,7 +22,7 @@ var logger = require('../logger/log4');
 var logManual = logger.getLogger('manual');
 module.exports = function () {
   // var rule = new schedule.RecurrenceRule();
-  // rule.minute = 23;
+  // rule.minute = 10;
   // 每天的凌晨0点0分30秒触发，50s发送邮件
   schedule.scheduleJob('30 0 0 * * *', function () {
   // schedule.scheduleJob(rule, function () {
@@ -36,7 +36,7 @@ module.exports = function () {
       console.log('-------------邮件附件--------------------------');
       var yesterdaystr = new Date().getTime() - 1 * 24 * 60 * 60 * 1000;
       var sendFiles = logsFile.length === 0 ? null : logsFile;
-      var subject = '每日node日志汇报';
+      var subject = '问答项目：每日node日志汇报';
       var text;
   
       if (logsFile.length === 0) {

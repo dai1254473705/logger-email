@@ -11,9 +11,9 @@ module.exports = {
     host: 'smtp.exmail.qq.com',
     port: 465,
     secure: true,// true for 465, false for other ports
-    user: 'your email', // generated ethereal user
-    pass: 'your password', // generated ethereal password ！！！ 这是我的邮箱密码，各位大佬都是好人^_^
-    from: '', // sender address
-    to: '@.com,@.com', // list of receivers 多个邮箱","分开
+    user: 'user email', // generated ethereal user
+    pass: 'user email password', // generated ethereal password 
+    from: 'sender address', // sender address
+    to: 'receiver address', // list of receivers 多个邮箱","分开
     canSend: true,//是否可以发送邮件（false：不发送；true:发送）
 };

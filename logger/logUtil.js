@@ -22,6 +22,7 @@ function getClientIp (req) {
 		}
 	} catch (e){
 		console.error(e);
+		return null;
 	}
 };
 

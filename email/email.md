@@ -5,9 +5,9 @@
 
 + 按天向指定邮箱发送前一天的日志（每天的凌晨0点0分30秒触发）；
 + 手动发送信息到指定邮箱；
-+ 发送信|附件；
++ 发送信息|html|附件；
 
-### 配置文件 `/zhuge-ask/util/email/email.js`
+### 配置文件 `/zhuge-ask/static-config/log-config.js`
 
 
 ### 1. 定时任务向指定邮箱发送邮件
@@ -34,10 +34,10 @@ sendFiles参数如下(sendFiles==null则不发送附件)：
 
 ```
 [{   // file on disk as an attachment
-    path: '/zhugelogs/error/error_2018-10-30.log' // stream this file
+    path: '/ask/zhugeasklogs/error/error_2018-10-30.log' // stream this file
 },
 {   // file on disk as an attachment
-    path: '/zhugelogs/info/info_2018-10-30.log' // stream this file
+    path: '/ask/zhugeasklogs/request/request_2018-10-30.log' // stream this file
 }]
 ```
 

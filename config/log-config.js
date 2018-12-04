@@ -28,8 +28,9 @@ module.exports = {
     pattern: '%d %p %c %z %m'
   }, //定义日志输出格式
   compress: false, //是否在生成第二个文件时将上一个压缩 如：error_2018-10-30.log.gz
-  logPath: path.join(__dirname,'../../loggers/'),
+  logPath: path.join(__dirname,'../../zhugelogs/'),
   keepFileExt: false,
   daysToKeep: 7,//保存7天,log4不起作用，单独方法删除文件
-  alwaysIncludePattern: true
+  alwaysIncludePattern: true,
+  onLineLink: 'http://127.0.1:3000/ask/zhugeasklogs/' //可访问的域名地址，查看日志用
 };

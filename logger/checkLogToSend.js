@@ -11,7 +11,7 @@ var LOGCONFIG = require('../config/log-config');
 var moment = require('moment');
 var crypto = require('crypto');
 var fs = require('fs');
-var secret = 'hahahaha';
+var secret = 'zhugezhaofang';
 
 /**
  * 

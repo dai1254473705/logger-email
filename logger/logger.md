@@ -6,22 +6,22 @@
 + 日志输出到控制台；
 + 日志保存到指定文件，按天生成；
 + 输出日志格式设置；
-+ 日志压缩（需要开启：已开启，开启后需要修改email模块下的文件路径，压缩包后缀为.gz,发送邮件后不方便实时预览）
++ 日志压缩（需要开启：未开启，开启后需要修改email模块下的文件路径，压缩包后缀为.gz,发送邮件后不方便实时预览，目前采取发送链接方式）
 
 ### 配置文件 `/zhuge-ask/static-config/log-config.js`
 
 
 ## 1. 日志保存路径
 
-(1) `/zhugelogs/error/error_2018-10-31.log`
+(1) `/ask/zhugeasklogs/error/error_2018-10-31.log`
 
 > 保存app.js文件中捕获的错误日志，和ejs渲染报错时的日志；
 
-(2) `/zhugelogs/request/request_2018-10-31.log`
+(2) `/ask/zhugeasklogs/request/request_2018-10-31.log`
 
 > 保存zgrequest.js 中request模块请求接口时catch exception和 请求接口失败返回error时的日志；
 
-(3) `/zhugelogs/manual/manual_2018-10-31.log`
+(3) `/ask/zhugeasklogs/manual/manual_2018-10-31.log`
 
 > 在coding过程中，可能会出现报错的地方，需要单独调用方法实现；
 
@@ -59,7 +59,8 @@ app.use(function (err, req, res, next) {
 
 ```
 	var outPutLog = require('../util/logger/outPutLog');
-	
+    var log4 = require('../util/logger/log4');
+	var logger = log4.getLogger('manual');
     req.post(url, urlPara, function (err, res, body) {
 		var endTime = new Date().getTime();
         var durTime = endTime - strTime;
@@ -68,7 +69,8 @@ app.use(function (err, req, res, next) {
                 // ==================catch error start==============================
                 outPutLog.requestError({
                     durTime: durTime,
-                    ip: request.ip,
+                    method: 'post',
+                    req: request,
                     url: url,
                     urlPara: urlPara,
                     error: err,
@@ -76,12 +78,28 @@ app.use(function (err, req, res, next) {
                 });
                 // ==================catch error end==============================
                ...others code
-            } 
+            } else {
+                ...others code
+                // 接口返回状态异常时，手动输出日志
+                if (body.code!==200 && body.success !== true && body.errcode !== 0){
+                    // ==================catch error start==============================
+                    logger.error({
+                        title: '接口请求成功，返回状态异常',
+                        durTime: durTime,
+                        ip: IP.getClientIp(request),
+                        url: url,
+                        urlPara: urlPara,
+                        body: body
+                    });
+                    // ==================catch error end==============================
+                }
+            }
         } catch (e) {
             // ==================catch error start==============================
             outPutLog.requestCatchError({
                 durTime: durTime,
-                ip: request.ip,
+                method: 'post',
+                req: request,
                 url: url,
                 urlPara: urlPara,
                 error: e,
@@ -98,8 +116,6 @@ app.use(function (err, req, res, next) {
 + 将 ejs 渲染出错时的日志保存
 
 ```
-var log4 = require('../../../util/logger/log4');
-var logger = log4.getLogger('manual');
 var ejsLogger = require('../../../util/logger/outPutLog');
 
 res.render(pagePath, {
@@ -108,12 +124,11 @@ res.render(pagePath, {
 	if (err) {
         ejsLogger.ejsRenderError({
             page: pagePath,
-            ip: req.ip,
+            req: req,
             error: err
         });
     }
     res.send(html);
-    res.end();
 });
 ```
 
@@ -123,6 +138,6 @@ res.render(pagePath, {
 var log4 = require('../../../util/logger/log4');
 var logger = log4.getLogger('manual');
 
-logger.error('这里可能要出错，我也不知道为什么，这是一个手动输出日志文件的案例');
+logger.error('这里可能要出错，我也不知道为什么，这是一个手动输出日志文件的案例，格式视情况而定');
 
 ```
