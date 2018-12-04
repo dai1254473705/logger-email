@@ -29,9 +29,10 @@ var config = {
   }, //定义日志输出格式
   compress: false, //是否在生成第二个文件时将上一个压缩 如：error_2018-10-30.log.gz
   logPath: path.join(__dirname,'../../defaultlogs/'),
-  keepFileExt: false,
+  keepFileExt: false, //boolean (default false) - preserve the file extension when rotating log files (file.log becomes file.2017-05-30.log instead of file.log.2017-05-30).
   daysToKeep: 7,//保存7天,log4不起作用，单独方法删除文件
-  alwaysIncludePattern: true,
+  alwaysIncludePattern: true,// boolean (default false) - include the pattern in the name of the current log file as well as the backups.daysToKeep - integer (default 0) - if this value is greater than zero, then files older than that many days will be deleted during log rolling.
+  attachments: false,// true 为发送附件，默认false
   onLineLink: 'http://127.0.1:3000/defaultlogs/' //可访问的域名地址，查看日志用
 };
 
@@ -71,20 +72,20 @@ var setLogConfig = function (options,callback){
   }
   var result = {};
 
-  // 仅允许 [pattern,layout,compress,logPath,daysToKeep,onLineLink] 修改
-  result.pattern = options.pattern || config.pattern; // file name 
-  result.layout = options.layout || config.layout; // log format
+  // 仅允许 [layout,compress,logPath,daysToKeep,onLineLink] 修改
+  // result.pattern = options.pattern || config.pattern; // file name 
+  // result.layout = options.layout || config.layout; // log format
   result.compress = options.compress || config.compress; // compress
   result.logPath = options.logPath || config.logPath; // file path
   result.daysToKeep = options.daysToKeep || config.daysToKeep; // days to keep 
+  result.attachments = options.attachments || config.attachments; // days to keep 
   result.onLineLink = options.onLineLink || config.onLineLink; // link 
-
-  config = Object.assign(config,result);
+  config= Object.assign(config,result);
   console.log(config);
-  console.log('========================set config log ok ===============================');
+  console.log('========================set log config ok ===============================');
 };
 
 module.exports = {
   set: setLogConfig,
-  options: config
+  options:config
 };

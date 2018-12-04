@@ -5,7 +5,7 @@
  * last modify name: daiyunzhou
  */
 var fs = require('fs');
-var LOGCONFIG = require('../config/log-config');
+var LOGCONFIG = require('../config/log-config').options;
 var moment = require('moment');
 
 // 获取日志文件名相同格式的时间格式
@@ -16,12 +16,23 @@ var yesterdayformat = function () {
 
 // 获取要发送的日志文件
 var getLogs = function () {
-  // FIXME 上线后修改成可用的域名地址
+  //  上线后修改成可用的域名地址
   var linkPath = LOGCONFIG.onLineLink ;
   var logPath = LOGCONFIG.logPath;
-  var errorlog = 'error/error_' + yesterdayformat() + '.log';
-  var requestlog = 'request/request_' + yesterdayformat() + '.log';
-  var mamullog = 'manual/manual_' + yesterdayformat() + '.log';
+  // 判断是否压缩过
+  var errorlog = '';
+  var requestlog = '';
+  var mamullog = '';
+  // 判断是否压缩过
+  if ( LOGCONFIG.compress ) {
+    errorlog = 'error/error_' + yesterdayformat() + '.log.gz';
+    requestlog = 'request/request_' + yesterdayformat() + '.log.gz';
+    mamullog = 'manual/manual_' + yesterdayformat() + '.log.gz';
+  } else {
+    errorlog = 'error/error_' + yesterdayformat() + '.log';
+    requestlog = 'request/request_' + yesterdayformat() + '.log';
+    mamullog = 'manual/manual_' + yesterdayformat() + '.log';
+  }
   //判断文件是否存在
   var errorIsSave = fs.existsSync( logPath +errorlog);
   var infoIsSave = fs.existsSync(logPath+requestlog);

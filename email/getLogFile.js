@@ -5,7 +5,7 @@
  * last modify name: daiyunzhou
  */
 var fs = require('fs');
-var LOGCONFIG = require('../config/log-config');
+var LOGCONFIG = require('../config/log-config').options;
 var moment = require('moment');
 
 // 获取日志文件名相同格式的时间格式
@@ -17,9 +17,19 @@ var yesterdayformat = function () {
 // 获取要发送的日志文件
 var getLogs = function () {
   var logPath = LOGCONFIG.logPath;
-  var errorlog = logPath + 'error/error_' + yesterdayformat() + '.log.gz';
-  var requestlog = logPath + 'request/request_' + yesterdayformat() + '.log.gz';
-  var mamullog = logPath + 'manual/manual_' + yesterdayformat() + '.log.gz';
+  var errorlog = '';
+  var requestlog = '';
+  var mamullog = '';
+  // 判断是否压缩过
+  if ( LOGCONFIG.compress ) {
+    errorlog = logPath + 'error/error_' + yesterdayformat() + '.log.gz';
+    requestlog = logPath + 'request/request_' + yesterdayformat() + '.log.gz';
+    mamullog = logPath + 'manual/manual_' + yesterdayformat() + '.log.gz';
+  } else {
+    errorlog = logPath + 'error/error_' + yesterdayformat() + '.log';
+    requestlog = logPath + 'request/request_' + yesterdayformat() + '.log';
+    mamullog = logPath + 'manual/manual_' + yesterdayformat() + '.log';
+  }
 
   //判断文件是否存在
   var errorIsSave = fs.existsSync(errorlog);
@@ -30,7 +40,7 @@ var getLogs = function () {
   if (errorIsSave) {
     sendFile.push({ path: errorlog });
   }
-  if (errorIsSave) {
+  if (infoIsSave) {
     sendFile.push({ path: requestlog });
   }
   if (mamulIsSave) {

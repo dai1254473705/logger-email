@@ -7,19 +7,12 @@ var app = express();
 var loggerConfig = require('./config');
 // 设置日志配置项
 loggerConfig.setLogConfig({
-    pattern: '_yyyy-MM-dd.log',
-    layout: {
-      type: 'pattern',
-      pattern: '%d %p %c %z %m'
-    }, //定义日志输出格式
-    compress: false, //是否在生成第二个文件时将上一个压缩 如：error_2018-10-30.log.gz
+    compress: true, //是否在生成第二个文件时将上一个压缩 如：error_2018-10-30.log.gz
     logPath: path.join(__dirname,'./defaultlogs/'),
-    keepFileExt: false,
     daysToKeep: 7,//保存7天,log4不起作用，单独方法删除文件
-    alwaysIncludePattern: true,
-    onLineLink: 'http://127.0.1:3000/defaultlogs/' //可访问的域名地址，查看日志用
+    attachments: true,// true 为发送附件，默认false
+    onLineLink: 'http://127.0.1:3000/defaultlogs/' // send:link<required> 可访问的域名地址，查看日志用
 });
-
 // 要保证链接能访问到日志
 app.use('/defaultlogs',express.static(path.join(__dirname, '../defaultlogs')));
 
@@ -33,6 +26,7 @@ loggerConfig.setEmailConfig({
     from: 'sender address', // sender address
     to: 'receiver address', // list of receivers 多个邮箱","分开
     canSend: true,//是否可以发送邮件（false：不发送；true:发送）
+    subject: '测试邮件啊啊',
 });
 var logger = require('./index');
 logger.sendDayLog();// 每日定时发送邮件

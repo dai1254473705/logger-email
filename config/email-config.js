@@ -14,6 +14,7 @@
 //     from: 'sender address', // sender address
 //     to: 'receiver address', // list of receivers 多个邮箱","分开
 //     canSend: true,//是否可以发送邮件（false：不发送；true:发送）
+//     subject: '测试邮件啊啊',
 // };
 var config = {
     host: '',
@@ -24,6 +25,7 @@ var config = {
     from: '', // sender address
     to: '', // list of receivers 多个邮箱","分开
     canSend: false,//是否可以发送邮件（false：不发送；true:发送）
+    subject: '邮件标题'
 };
 // 判断方法
 var check = function (name,options,callback){
@@ -65,15 +67,14 @@ var setEmailConfig = function (options,callback){
     // 仅允许 ['host','port','secure','user','pass','from','to',canSend] (目前是全部运行)修改
     result.host = options.host || config.host; 
     result.port = options.port || config.port; 
-    result.secure = options.secure || config.secure; 
+    result.secure = typeof(options.secure) === 'boolean' ? options.secure : config.secure; 
     result.user = options.user || config.user;
     result.pass = options.pass || config.pass;
     result.from = options.from || config.from;
     result.to = options.to || config.to;
-    result.canSend = options.canSend || config.canSend;
-  
-    // config = Object.assign(config,result);
-    config = result;
+    result.subject = options.subject || config.subject;
+    result.canSend = typeof(options.canSend) === 'boolean' ? options.canSend : config.canSend;
+    config = Object.assign(config,result)
     console.log(config);
     console.log('========================set email config ok ===============================');
 };

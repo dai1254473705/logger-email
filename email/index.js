@@ -43,18 +43,26 @@ var transporter = nodemailer.createTransport({
     };
  */
 var sendEmail = function (subject, text, attachments) {
+  console.log('-----------------sendemail-------------');
+
   // 要发送的邮件内容
   var mailOptions = {
     from: EMAILCONFIG.from,
     to: EMAILCONFIG.to,
-    subject: subject || '问答项目日志',
-    text: text || '问答项目日志内容'
+    subject: subject || '项目日志',
+    text: text || '项目日志内容'
   };
 
   // 判断是否需要发送文件
   if (attachments && attachments instanceof Array) {
     mailOptions.attachments = attachments;
   }
+  console.log(subject);
+  console.log(text);
+  console.log(attachments);
+  console.log(mailOptions);
+  console.log(EMAILCONFIG.canSend);
+console.log(EMAILCONFIG);
 
   // send mail with defined transport object
   // 判断是否可以发送邮件

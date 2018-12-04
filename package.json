@@ -1,6 +1,6 @@
 {
   "name": "logger-email",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "express+node+log4js日志系统，包含邮件功能",
   "main": "index.js",
   "author": {

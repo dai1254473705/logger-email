@@ -5,7 +5,7 @@
  * last modify author: daiyunzhou
  */
 
-var LOGCONFIG = require('../config/log-config');
+var LOGCONFIG = require('../config/log-config').options;
 var fs = require('fs');
 var moment = require('moment');
 /**
